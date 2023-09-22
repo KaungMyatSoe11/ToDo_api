@@ -14,6 +14,7 @@ const ToDoSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.ObjectId,
       required: true,
+      ref:"user"
     },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }

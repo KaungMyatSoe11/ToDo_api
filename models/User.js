@@ -17,12 +17,30 @@ const UserSchema = mongoose.Schema(
       required: true,
       minlength: 6,
     },
+    verificationToken: String,
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    verified: Date,
+    passwordToken: {
+      type: String,
+    },
+    passwordTokenExpirationDate: {
+      type: Date,
+    },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
 UserSchema.virtual("todos", {
   ref: "ToDo",
+  localField: "_id",
+  foreignField: "user",
+  justOne: false,
+});
+UserSchema.virtual("tokens", {
+  ref: "Token",
   localField: "_id",
   foreignField: "user",
   justOne: false,
@@ -40,4 +58,4 @@ UserSchema.methods.comparePassword = async function (candidatePassword) {
 };
 
 
-module.exports=mogoose.model("User",UserSchema)
+module.exports=mongoose.model("User",UserSchema)

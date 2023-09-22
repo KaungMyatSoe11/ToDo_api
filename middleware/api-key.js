@@ -9,12 +9,12 @@ const apiKey = async (req, res, next) => {
     const validApiKey=await ApiKey.findOne({api_key:key})
     
     if(!validApiKey){
-      throw new UnauthenticatedError("Key invalid")
+      throw new UnauthenticatedError("API Key invalid")
     }
     
     next();
   } catch (err) {
-    throw new UnauthenticatedError("Key invalid");
+    throw new UnauthenticatedError("API Key invalid");
   }
 };
 

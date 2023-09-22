@@ -14,11 +14,11 @@ const ApiKeySchema = new mongoose.Schema(
     },
     reated_By: {
       type: String,
-      required: [true, "Please provide created By."],
+      required: [false, "Please provide created By."],
     },
     updated_By: {
       type: String,
-      required: [true, "Please provide updated By."],
+      required: [false, "Please provide updated By."],
     },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
