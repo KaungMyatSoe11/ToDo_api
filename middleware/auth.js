@@ -6,6 +6,7 @@ const Token = require("../models/Token");
 
 const auth = async (req, res, next) => {
   //const authHeader = req.headers.authorization;
+  console.log({cookies:req.signedCookies});
 
   const { refreshToken, accessToken } = req.signedCookies;
 

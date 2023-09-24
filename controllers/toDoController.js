@@ -18,6 +18,7 @@ const createToDo = async (req, res) => {
 
 const getAllToDos = async (req, res) => {
   const { userId } = req.user;
+  console.log({id:userId});
   const todos = await ToDo.find({ user: userId });
   res.status(StatusCodes.OK).json({ todos });
 };

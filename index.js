@@ -2,8 +2,11 @@ require("dotenv").config();
 require("express-async-errors");
 const express = require("express");
 const cors = require("cors");
-const requestIp = require("request-ip");
 const cookieParser = require("cookie-parser");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const mongoSanitize = require("express-mongo-sanitize");
+const rateLimiter = require("express-rate-limit");
 
 const connectDB = require("./db/connect");
 
@@ -16,9 +19,31 @@ const errorHandleMiddleware = require("./middleware/error-handler");
 const apiKey = require("./middleware/api-key");
 const auth = require("./middleware/auth");
 
-const app = express();
+var whitelist = ["http://localhost:3000", "localhost","https://todo.kaungmyatsoe.dev/","todo.kaungmyatsoe.dev"];
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+};
 
-app.use(cors());
+const app = express();
+app.set("trust proxy", 1);
+app.use(
+  rateLimiter({
+    windowMs: 15 * 60 * 1000,
+    max: 60,
+  })
+);
+app.use(helmet());
+app.use(cors(corsOptions));
+app.use(xss());
+app.use(mongoSanitize());
+
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
 
@@ -31,8 +56,8 @@ app.get("/", (req, res) => {
 const port = process.env.PORT ? process.env.PORT : 5001;
 
 app.use("/api/v1/api-key", apiKeyRouter);
-app.use("/api/v1/auth", apiKey, userRouter);
-app.use("/api/v1/todo", apiKey, auth,toDoRouter );
+app.use("/api/v1/auth", userRouter);
+app.use("/api/v1/todo", auth, toDoRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandleMiddleware);

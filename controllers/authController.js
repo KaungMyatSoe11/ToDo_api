@@ -9,8 +9,9 @@ const crypto = require("crypto");
 const sendVerificationEmail = require("../utils/sendVerificationEmail");
 const { StatusCodes } = require("http-status-codes");
 const Token = require("../models/Token");
-const { log } = require("console");
+
 const login = async (req, res) => {
+  console.log("login");
   const { email, password } = req.body;
 
   if (!email || !password) {

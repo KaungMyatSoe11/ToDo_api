@@ -6,7 +6,7 @@ const createJWT = ({ payload }) => {
 };
 
 const isTokenValid = (token) => {
-  console.log(token,process.env.JWT_SECRET);
+  console.log(token, process.env.JWT_SECRET);
   return jwt.verify(token, process.env.JWT_SECRET);
 };
 
