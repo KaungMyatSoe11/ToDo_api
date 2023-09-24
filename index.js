@@ -19,7 +19,7 @@ const errorHandleMiddleware = require("./middleware/error-handler");
 const apiKey = require("./middleware/api-key");
 const auth = require("./middleware/auth");
 
-var whitelist = ["http://localhost:3000", "localhost","https://todo.kaungmyatsoe.dev/","todo.kaungmyatsoe.dev"];
+var whitelist = ["http://localhost:3000", "localhost","https://todo.kaungmyatsoe.dev","kaungmyatsoe.dev"];
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
