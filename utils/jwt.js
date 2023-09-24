@@ -29,6 +29,7 @@ const attachCookiesToResponse = ({ res, user, refreshToken }) => {
     signed: true,
     expires: new Date(Date.now() + oneDay),
     sameSite: "Strict",
+    domain:"todo.kaungmyatsoe.dev"
   });
 
   res.cookie("refreshToken", refreshTokenJWT, {
@@ -37,6 +38,7 @@ const attachCookiesToResponse = ({ res, user, refreshToken }) => {
     signed: true,
     expires: new Date(Date.now() + longerExp),
     sameSite: "Strict",
+    domain:"todo.kaungmyatsoe.dev"
   });
   res.setHeader("Access-Control-Allow-Headers", "Set-Cookie");
 };
