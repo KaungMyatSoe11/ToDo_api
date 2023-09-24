@@ -36,6 +36,7 @@ const attachCookiesToResponse = ({ res, user, refreshToken }) => {
     signed: true,
     expires: new Date(Date.now() + longerExp),
   });
+  res.setHeader('Access-Control-Allow-Headers', 'Set-Cookie')
 };
 
 module.exports = {
