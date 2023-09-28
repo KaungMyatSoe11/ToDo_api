@@ -18,15 +18,18 @@ const login = async (req, res) => {
     throw new CustomError.BadRequestError("Please provide email and password");
   }
   const user = await User.findOne({ email });
+  console.log(email);
+  console.log(user);
 
   if (!user) {
     throw new CustomError.UnauthenticatedError("Invalid Credentials");
   }
   const isPasswordCorrect = await user.comparePassword(password);
-
+console.log(isPasswordCorrect);
   if (!isPasswordCorrect) {
     throw new CustomError.UnauthenticatedError("Invalid Credentials");
   }
+  console.log(user.isVerified);
   if (!user.isVerified) {
     throw new CustomError.UnauthenticatedError("Please verify your email");
   }

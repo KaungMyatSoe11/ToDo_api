@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const session = require('express-session')
 
 const createJWT = ({ payload }) => {
   const token = jwt.sign(payload, process.env.JWT_SECRET);
@@ -28,7 +29,7 @@ const attachCookiesToResponse = ({ res, user, refreshToken }) => {
     secure: process.env.NODE_ENV === "production",
     signed: true,
     expires: new Date(Date.now() + oneDay),
-    sameSite: "Strict",
+    sameSite: "strict",
     domain:"todo.kaungmyatsoe.dev"
   });
 
@@ -37,7 +38,7 @@ const attachCookiesToResponse = ({ res, user, refreshToken }) => {
     secure: process.env.NODE_ENV === "production",
     signed: true,
     expires: new Date(Date.now() + longerExp),
-    sameSite: "Strict",
+    sameSite: "strict",
     domain:"todo.kaungmyatsoe.dev"
   });
   res.setHeader("Access-Control-Allow-Headers", "Set-Cookie");
